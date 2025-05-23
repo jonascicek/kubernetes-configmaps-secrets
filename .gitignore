@@ -1,0 +1,16 @@
+# Node.js
+node_modules/
+npm-debug.log
+.env
+
+# Docker
+*.tar
+*.log
+
+# Secrets – NIEMALS versionieren
+kubernetes/app-secret.yaml
+
+# Optional: ignore local builds, IDEs, etc.
+dist/
+.vscode/
+.DS_Store
