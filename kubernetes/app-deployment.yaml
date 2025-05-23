@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: my-config-app
-        image: <YOUR_DOCKERHUB_USERNAME>/my-config-app:latest
+        image: jigglyy/my-config-app:latest
         ports:
         - containerPort: 3000
         env:
