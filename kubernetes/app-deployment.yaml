@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-config-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-config-app
+  template:
+    metadata:
+      labels:
+        app: my-config-app
+    spec:
+      containers:
+      - name: my-config-app
+        image: <YOUR_DOCKERHUB_USERNAME>/my-config-app:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: GREETING_MESSAGE
+          valueFrom:
+            configMapKeyRef:
+              name: my-app-config
+              key: GREETING_MESSAGE
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: my-app-secret
+              key: DB_PASSWORD
+        - name: API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: my-app-secret
+              key: API_KEY
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/app/config
+        - name: secret-volume
+          mountPath: /etc/app/secrets
+          readOnly: true
+      volumes:
+      - name: config-volume
+        configMap:
+          name: my-app-config
+      - name: secret-volume
+        secret:
+          secretName: my-app-secret
